@@ -24,12 +24,11 @@ spec:
             name: mysql-secret
         - configMapRef:
             name: mysql-config
-        - configMapRef:
-            name: server-config
         volumeMounts:
         - mountPath: /var/lib/mysql
           name: mysql-persistent-volume
         resources: {}
+
       volumes:
         - name: mysql-persistent-volume
           persistentVolumeClaim:

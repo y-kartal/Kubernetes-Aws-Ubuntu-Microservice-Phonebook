@@ -2,21 +2,21 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: webserver-deploy
-  name: webserver-deploy
+    app: resultserver-deploy
+  name: resultserver-deploy
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: webserver-deploy
+      app: resultserver-deploy
   template:
     metadata:
       labels:
-        app: webserver-deploy
+        app: resultserver-deploy
     spec:
       containers:
-      - image: yasinkartal/webserver
-        name: webserver
+      - image: yasinkartal/result-server:1.0
+        name: resultserver
         ports:
         - containerPort: 80
         envFrom:
