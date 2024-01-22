@@ -1,43 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  labels:
+    app: resultserver-deploy
   name: resultserver-deploy
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: phonebook-webserver
+      app: resultserver-deploy
   template:
     metadata:
       labels:
-        app: phonebook-webserver
+        app: resultserver-deploy
     spec:
       containers:
-        - image: yasinkartal/result_server
-          name: resultserver-deploy
-          env:
-            - name: MYSQL_DATABASE
-              valueFrom:
-                configMapKeyRef:
-                  name: mysql-config
-                  key: MYSQL_DATABASE
-            - name: MYSQL_USER
-              valueFrom:
-                configMapKeyRef:
-                  name: mysql-config
-                  key: MYSQL_USER
-            - name: MYSQL_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: mysql-secret
-                  key: MYSQL_PASSWORD
-            - name: MYSQL_DATABASE_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: mysql-config
-                  key: MYSQL_DATABASE_HOST
-          ports:
-            - containerPort: 80
-              name: pb-webserver
-          resources: {}
-
+      - image: yasinkartal/resultserver
+        name: resultserver
+        ports:
+        - containerPort: 80
+        envFrom:
+        - configMapRef:
+            name: server-config
+        - secretRef:
+            name: mysql-secret
+        resources: {}
